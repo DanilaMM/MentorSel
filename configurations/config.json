@@ -1,0 +1,9 @@
+{
+  "timeout": 30,
+  "base_url": "https://store.steampowered.com/",
+  "browser": "chrome",
+  "options": [
+    "--start-maximized",
+    "--headless"
+  ]
+}
