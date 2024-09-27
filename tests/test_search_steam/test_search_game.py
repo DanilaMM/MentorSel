@@ -1,14 +1,15 @@
 import pytest
 from pages.steam_main import SteamMain
-from pages.search_page import SearchPage
+from pages.search_page import SearchPage, SortType
 from itertools import product
-
+from configurations.read_config import ConfigReader
 
 
 class TestSteam:
-    game_names = ['The witcher', 'Fallout']
-    expected_counts = [10, 20]
-    langs = ['ru', 'eng']
+    read_json = ConfigReader()
+    game_names = read_json.get_params("game_names")
+    expected_counts = read_json.get_params("expected_counts")
+    langs = read_json.get_params("langs")
 
     parametrized_data = list(product(game_names, expected_counts, langs))
 
@@ -21,6 +22,7 @@ class TestSteam:
         steam_search.wait_load_page()
         steam_main.change_lang(lang)
         steam_main.search_game(game_name)
-        steam_search.select_sorted_type('desc_price')
+        # я должен использовать еще 1 импорт для юзания Enum??Нельзя никак это обойти?
+        steam_search.select_sorted_type(SortType.DESC_PRICE)
         list_name_games = len(steam_search.get_titles_games(expected_count))
-        assert list_name_games == expected_count, f'Ожидаемая длина списка имен "{expected_count}", фактическая длина - "{list_name_games}"'
+        assert list_name_games == expected_count, f'Ожидаемая длина списка имен "{expected_count}",фактическая длина - "{list_name_games}"'

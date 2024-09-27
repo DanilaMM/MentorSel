@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as ec
-
+from waits.wait_ready_state import WaitDoc
 
 
 class SteamMain(BasePage):
@@ -10,7 +10,7 @@ class SteamMain(BasePage):
     INPUT_PASSWORD = (By.XPATH, "//form//input[@type='password']")
     BUTTON_ENTER = (By.XPATH, "//form//button[@type='submit']")
     DIV_TEXT_ERROR = (By.XPATH, "//form//div[contains(text(),'Пожалуйста, проверьте свой пароль')]")
-    SPAN_LANG = (By.XPATH, "//span[@id='language_pulldown']")
+    SPAN_LANG = (By.XPATH, "//*[@id='language_pulldown']")
     SELECT_LANG = {
         "eng": (By.XPATH, "//div[@class='popup_body popup_menu']//a[contains(text(), 'English')]"),
         "ru": (By.XPATH, "//div[@class='popup_body popup_menu']//a[contains(text(), 'Русс')]"),
@@ -18,6 +18,10 @@ class SteamMain(BasePage):
 
     INPUT_NAME_GAME = (By.XPATH, "//input[@id='store_nav_search_term']")
     A_ACCEPT_SEARCH_GAME = (By.XPATH, "//a[@id='store_search_link']")
+
+    def wait_load_page(self):
+        wait_el = WaitDoc(self.HREF_ENTER, 'class', 'global_action_link')
+        wait_el(self.driver)
 
     def change_lang(self, lang):
         my_lang = self.wait.find_element(By.TAG_NAME, 'html').get_attribute('lang')

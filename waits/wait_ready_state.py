@@ -8,5 +8,4 @@ class WaitDoc:
         element = driver.find_element_by_xpath(self._locator)
         if element.get_attribute(self._atribute) == self._attribute_value:
             return element
-        else:
-            return False
+        return False
