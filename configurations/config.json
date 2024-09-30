@@ -2,9 +2,18 @@
   "timeout": 30,
   "base_url": "https://store.steampowered.com/",
   "browser": "chrome",
-  "game_names": ["The witcher", "Fallout"],
-  "expected_counts" :[10, 20],
-  "langs" : ["ru", "eng"],
+  "game_names": [
+    "The witcher",
+    "Fallout"
+  ],
+  "expected_counts": [
+    10,
+    20
+  ],
+  "langs": [
+    "ru",
+    "eng"
+  ],
   "options": [
     "--start-maximized",
     "--headless"

@@ -2,19 +2,19 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as ec
 from waits.wait_ready_state import WaitDoc
-from enum import Enum
+from enum import StrEnum
 
 
-class SortType(Enum):
+class SortType(StrEnum):
     DESC_PRICE = "desc_price"
     ASC_PRICE = "asc_price"
 
 
 class SearchPage(BasePage):
-    INPUT_NAME_GAME = (By.XPATH, "//input[@id='store_nav_search_term']")
-    A_ACCEPT_SEARCH_GAME = (By.XPATH, "//a[@id='store_search_link']")
+    INPUT_NAME_GAME = (By.XPATH, "//*[@id='store_nav_search_term']")
+    A_ACCEPT_SEARCH_GAME = (By.XPATH, "//*[@id='store_search_link']")
     ALL_TITLE_GAME = (By.XPATH, "//span[@class='title']")
-    OPEN_SORT_WINDOW = (By.XPATH, "//a[@id='sort_by_trigger']")
+    OPEN_SORT_WINDOW = (By.ID, "sort_by_trigger")
     SORTED_TYPE = {
         SortType.DESC_PRICE: (By.XPATH, "//a[@id='Price_DESC']"),
         SortType.ASC_PRICE: (By.XPATH, "//a[@id='Price_ASC']")

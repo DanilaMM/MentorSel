@@ -1,7 +1,14 @@
+from enum import StrEnum
+
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 from selenium.webdriver.support import expected_conditions as ec
 from waits.wait_ready_state import WaitDoc
+
+
+class SortType(StrEnum):
+    ENG = "eng"
+    RU = "ru"
 
 
 class SteamMain(BasePage):
@@ -12,22 +19,22 @@ class SteamMain(BasePage):
     DIV_TEXT_ERROR = (By.XPATH, "//form//div[contains(text(),'Пожалуйста, проверьте свой пароль')]")
     SPAN_LANG = (By.XPATH, "//*[@id='language_pulldown']")
     SELECT_LANG = {
-        "eng": (By.XPATH, "//div[@class='popup_body popup_menu']//a[contains(text(), 'English')]"),
-        "ru": (By.XPATH, "//div[@class='popup_body popup_menu']//a[contains(text(), 'Русс')]"),
+        SortType.ENG: (By.XPATH, "//div[@class='popup_body popup_menu']//a[contains(text(), 'English')]"),
+        SortType.RU: (By.XPATH, "//div[@class='popup_body popup_menu']//a[contains(text(), 'Русс')]"),
     }
 
-    INPUT_NAME_GAME = (By.XPATH, "//input[@id='store_nav_search_term']")
-    A_ACCEPT_SEARCH_GAME = (By.XPATH, "//a[@id='store_search_link']")
+    INPUT_NAME_GAME = (By.XPATH, "//*[@id='store_nav_search_term']")
+    A_ACCEPT_SEARCH_GAME = (By.XPATH, "//*[@id='store_search_link']")
 
     def wait_load_page(self):
         wait_el = WaitDoc(self.HREF_ENTER, 'class', 'global_action_link')
         wait_el(self.driver)
 
-    def change_lang(self, lang):
+    def change_lang(self, sort_type):
         my_lang = self.wait.find_element(By.TAG_NAME, 'html').get_attribute('lang')
-        if my_lang != lang:
+        if my_lang != sort_type:
             self.wait.until(ec.element_to_be_clickable(self.SPAN_LANG)).click()
-            self.wait.until(ec.element_to_be_clickable(self.SELECT_LANG[lang])).click()
+            self.wait.until(ec.element_to_be_clickable(self.SELECT_LANG[sort_type])).click()
 
     def search_game(self, name):
         self.wait.until(ec.visibility_of_element_located(self.INPUT_NAME_GAME)).send_keys(name)

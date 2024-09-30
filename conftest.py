@@ -1,25 +1,9 @@
-from faker.contrib import pytest
-from selenium.webdriver import Chrome
+import pytest
+
+from driver import SingletonDriver
 
 
-class SingletonDriver:
-    __instance = None
-
-    def __new__(cls):
-        if cls.__instance is None:
-            cls.__instance = Chrome()
-        return cls.__instance
-
-    @classmethod
-    def get_driver(cls):
-        return cls.__instance
-
-    @classmethod
-    def quit(cls):
-        cls.__instance.quit()
-        cls.__instance = None
-
-
+# оставить фикстуру тут, синглтон в другое место
 @pytest.fixture(scope="function")
 def driver():
     b = SingletonDriver()
