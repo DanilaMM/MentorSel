@@ -7,8 +7,8 @@ class TestSteam:
     fake = Faker()
 
     @pytest.mark.steam
-    @pytest.mark.steam_login_error
-    def test_steam_login_error(self, driver):
+    @pytest.mark.steam_login_negative
+    def test_steam_login_negative(self, driver):
         steam_main = SteamMain(driver)
         steam_main.wait_load_page()
         steam_main.click_href_enter()
